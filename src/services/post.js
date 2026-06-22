@@ -90,7 +90,10 @@ export const getPostsLimitService = (
           key !== "areaCode" &&
           key !== "areaCode[]"
         ) {
-          queries[key] = rawQuery[key];
+          const val = rawQuery[key];
+          if (val !== undefined && val !== "NaN" && val !== "null") {
+            queries[key] = val;
+          }
         }
       });
 
