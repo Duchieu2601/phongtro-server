@@ -16,7 +16,36 @@ const dataBody = [
   { body: canhochungcu, code: "CHCC" },
   { body: canhomini, code: "CHMINI" },
 ];
-
+const categories = [
+  {
+    code: "PTRO",
+    value: "Phòng trọ",
+    header: "Kênh thông tin Phòng Trọ số 1 Việt Nam",
+    subheader:
+      " Kênh thông tin phòng trọ số 1 Việt Nam. Website đăng tin cho thuê phòng trọ miễn phí, tiếp cận hơn 2.5 triệu lượt xem mỗi tháng, uy tín, hiệu quả cao",
+  },
+  {
+    code: "NNN",
+    value: "Nhà nguyên căn",
+    header: "Cho Thuê Nhà Nguyên Căn, Giá Rẻ, Chính Chủ, Mới Nhất 2026",
+    subheader:
+      "Cho thuê nhà nguyên căn, nhà riêng: giá rẻ, chính chủ, đầy đủ tiện nghi 2026. Tìm thuê nhà với nhiều mức giá khác nhau, đa dạng loại diện tích. Đăng tin cho thuê nhà nhanh",
+  },
+  {
+    code: "CHCC",
+    value: "Căn hộ chung cư",
+    header: "Cho Thuê Căn Hộ Chung Cư, Giá Rẻ, View Đẹp, Mới Nhất 2026",
+    subheader:
+      "Cho thuê căn hộ chung cư giá rẻ, chính chủ, view đẹp, cập nhật mới nhất 2026. Đa dạng diện tích và mức giá. Danh sách căn hộ cho thuê theo dự án, ảnh thật, tin mới mỗi ngày.",
+  },
+  {
+    code: "CHMINI",
+    value: "Căn hộ mini",
+    header: "Cho Thuê Căn Hộ Mini + Chung Cư Mini Giá Rẻ, Mới Nhất 2026",
+    subheader:
+      "Cho thuê căn hộ mini, chung cư mini, tất cả tin đăng cho thuê căn hộ chung cư mini mới nhất 2026: giá rẻ, diện tích nhỏ, đầy đủ tiện nghi, an ninh.",
+  },
+];
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(12));
 
@@ -94,7 +123,7 @@ export const insertService = () =>
       await db.Province.bulkCreate(provincesToInsert, {
         ignoreDuplicates: true,
       });
-
+      await db.Category.bulkCreate(categories);
       // =================================================================
       // BƯỚC 2: DUYỆT VÀ CHÈN TOÀN BỘ BÀI ĐĂNG (POSTS)
       // =================================================================
