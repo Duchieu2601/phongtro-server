@@ -47,7 +47,7 @@ router.get("/stats/comments", async (req, res) => {
   }
 });
 
-// ✅ MỚI: charts data
+// 🛠️ ĐÃ SỬA: Thay thế DATE_FORMAT thành to_char phù hợp với PostgreSQL
 router.get("/stats/charts", async (req, res) => {
   try {
     const { Sequelize } = db;
@@ -58,18 +58,18 @@ router.get("/stats/charts", async (req, res) => {
     const monthlyPosts = await db.Post.findAll({
       attributes: [
         [
-          Sequelize.fn("DATE_FORMAT", Sequelize.col("Post.createdAt"), "%m/%Y"),
+          Sequelize.fn("to_char", Sequelize.col("Post.createdAt"), "MM/YYYY"), // 👈 Đổi ở đây
           "month",
         ],
         [Sequelize.fn("COUNT", Sequelize.col("Post.id")), "posts"],
       ],
       where: { createdAt: { [Op.gte]: oneYearAgo } },
       group: [
-        Sequelize.fn("DATE_FORMAT", Sequelize.col("Post.createdAt"), "%m/%Y"),
+        Sequelize.fn("to_char", Sequelize.col("Post.createdAt"), "MM/YYYY"), // 👈 Đổi ở đây
       ],
       order: [
         [
-          Sequelize.fn("DATE_FORMAT", Sequelize.col("Post.createdAt"), "%m/%Y"),
+          Sequelize.fn("to_char", Sequelize.col("Post.createdAt"), "MM/YYYY"), // 👈 Đổi ở đây
           "ASC",
         ],
       ],
@@ -80,16 +80,16 @@ router.get("/stats/charts", async (req, res) => {
     const monthlyUsers = await db.User.findAll({
       attributes: [
         [
-          Sequelize.fn("DATE_FORMAT", Sequelize.col("createdAt"), "%m/%Y"),
+          Sequelize.fn("to_char", Sequelize.col("createdAt"), "MM/YYYY"), // 👈 Đổi ở đây
           "month",
         ],
         [Sequelize.fn("COUNT", Sequelize.col("id")), "users"],
       ],
       where: { createdAt: { [Op.gte]: oneYearAgo } },
-      group: [Sequelize.fn("DATE_FORMAT", Sequelize.col("createdAt"), "%m/%Y")],
+      group: [Sequelize.fn("to_char", Sequelize.col("createdAt"), "MM/YYYY")], // 👈 Đổi ở đây
       order: [
         [
-          Sequelize.fn("DATE_FORMAT", Sequelize.col("createdAt"), "%m/%Y"),
+          Sequelize.fn("to_char", Sequelize.col("createdAt"), "MM/YYYY"), // 👈 Đổi ở đây
           "ASC",
         ],
       ],
